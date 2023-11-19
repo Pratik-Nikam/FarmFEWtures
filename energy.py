@@ -2,7 +2,7 @@ import os
 import json
 import pandas as pd
 import seaborn as sns
-from netlogo_instance import get_netlogo_instance
+
 
 dirname = os.path.dirname(__file__)
 
@@ -140,6 +140,7 @@ def energy_calc(
     # Set the style and context for the plots
     sns.set_style("white")
     sns.set_context("talk")
+    from netlogo_instance import get_netlogo_instance
     netlogo = get_netlogo_instance()
 
     # Set NetLogo variables

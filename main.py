@@ -7,18 +7,21 @@ from multiprocessing import Process, Queue
 from flask import Flask, render_template, request, jsonify, send_file
 import pandas as pd
 
+from netlogo_instance import get_netlogo_instance
 from agriculture import crop_production_calculation, net_income_calculation
 from energy import farm_energy_production_calculation, energy_net_income_calculation
 from climate import crop_income_calculation, insurance_income_calculation
 from water import crop_groundwater_irrigation, groundwater_level
-from netlogo_instance import get_netlogo_instance
 
 
+app = Flask(__name__,template_folder='template')
 
-# Initialize Flask app
-app = Flask(__name__)
 
-# Define routes for different pages
+# Homepage EndPoint
+@app.route('/')
+def index():
+    return render_template('homepage.html')
+
 
 # NetLogo Input page
 @app.route("/NetlogoInputV1")
@@ -288,16 +291,16 @@ def calculate_climate():
 
     return jsonify(result)
 
-# Function to start Flask app
-def start_flaskapp():
-    app.run(host="0.0.0.0", port=5000)
 
-# Restart route
-@app.route("/restart", methods=["GET", "POST"])
+@app.route('/restart', methods=['GET', 'POST'])
 def restart():
-    some_queue = queue.Queue()
     some_queue.put("something")
     print("Restarted successfully")
+
+def start_flaskapp(queue):
+    global some_queue
+    some_queue = queue
+    app.run(host='0.0.0.0', port=5000)
 
 # Download file route
 @app.route("/download")
