@@ -1,6 +1,6 @@
 "export-plot data (NetLogo 6.3.0)"
 "FEWCalc_Export_Test.nlogo"
-"11/14/2023 09:17:18:564 -0600"
+"11/18/2023 20:32:17:794 -0600"
 
 "MODEL SETTINGS"
 "corn_area","wheat_area","soybeans_area","sg_area","#wind_turbines","aquifer_thickness","capacity_s","#panel_sets","future_process","simulation_period","climate_model","degrade_w","energy_value","nyear_s","nyear_w","ptc_w","capacity_w","itc_s","ptc_s","degrade_s","min_aq_thickness","cost_s","cost_w","sun_hrs","wind_factor","loan_term","interest"

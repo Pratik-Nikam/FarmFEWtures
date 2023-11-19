@@ -1,112 +1,63 @@
-from dependency import *
-from agriculture import *
-from water import *
-from energy import *
-from climate import *
-
-
-app = Flask(__name__, template_folder="template")
-
-global some_queue
+import os
+import sys
+import time
 import queue
+import subprocess
+from multiprocessing import Process, Queue
+from flask import Flask, render_template, request, jsonify, send_file
+import pandas as pd
 
-some_queue = queue.Queue()
+from agriculture import crop_production_calculation, net_income_calculation
+from energy import farm_energy_production_calculation, energy_net_income_calculation
+from climate import crop_income_calculation, insurance_income_calculation
+from water import crop_groundwater_irrigation, groundwater_level
+from netlogo_instance import get_netlogo_instance
 
 
-# Homepage EndPoint
-@app.route("/")
-def index():
-    return render_template("homepage.html")
 
+# Initialize Flask app
+app = Flask(__name__)
 
-# Netlogo Stimulation EndPoint
+# Define routes for different pages
+
+# NetLogo Input page
 @app.route("/NetlogoInputV1")
 def netlogoinput():
     return render_template("NetlogoInputV1.html")
 
-
-# Agriculture Page EndPoint
+# Agriculture Page
 @app.route("/AgricultureV1")
 def agriculture():
     return render_template("index.html")
 
-
-# Water Page EndPoint
-
-
+# Water Page
 @app.route("/WaterV1")
 def water():
     return render_template("water.html")
 
-
-# Energy Page EndPoint
-
-
+# Energy Page
 @app.route("/EnergyV1")
 def energy():
     return render_template("energy.html")
 
-
+# Chart Window
 @app.route("/ChartWindow")
 def ChartWindow():
     return render_template("ChartWindow.html")
 
-
+# Climate Page
 @app.route("/ClimateV1")
 def climate():
     return render_template("climate.html")
 
+# Define global variables
+corn_area, wheat_area, soybeans_area, sg_area, num_of_years = None, None, None, None, None
+aquifier_level, min_aquifier_level = None, None
+energy_value, loan_term, interest, num_wind_turbines, nyear_w, capacity_w, cost_w, degrade_w, wind_factor, num_panel_sets, nyear_s, cost_s, capacity_s, degrade_s, sun_hrs, ptc_w, itc_s, ptc_s = None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None
+future_processes, climate_model = None, None
+some_queue = None
 
-# Agriculture global variable
-global corn_area, wheat_area, soybeans_area, sg_area, num_of_years
-
-# Water global variable
-global aquifier_level, min_aquifier_level
-
-# Energy global variable
-global energy_value, loan_term, interest, num_wind_turbines, nyear_w, capacity_w, cost_w, degrade_w, wind_factor, num_panel_sets, nyear_s, cost_s, capacity_s, degrade_s, sun_hrs, ptc_w, itc_s, ptc_s
-
-# Climate global variable
-global future_processes, climate_model
-
-# Agriculture Form Value
-corn_area = None
-wheat_area = None
-soybeans_area = None
-sg_area = None
-
-# Water Form Value
-aquifier_level = None
-min_aquifier_level = None
-
-# Energy Form Value
-energy_value = None
-loan_term = None
-interest = None
-num_wind_turbines = None
-nyear_w = None
-capacity_w = None
-cost_w = None
-degrade_w = None
-wind_factor = None
-num_panel_sets = None
-nyear_s = None
-cost_s = None
-capacity_s = None
-degrade_s = None
-sun_hrs = None
-ptc_w = None
-itc_s = None
-ptc_s = None
-
-# Climate Form Value
-future_processes = None
-climate_model = None
-
-
-num_of_years = None
-
-
+# Main calculation route
 @app.route("/calculate", methods=["GET", "POST"])
 def calculate():
     global corn_area, wheat_area, soybeans_area, sg_area, num_of_years
@@ -241,7 +192,7 @@ def calculate():
     restart()
     return jsonify(data)
 
-
+# Agriculture calculation route
 @app.route("/calculateAgriculture", methods=["GET", "POST"])
 def calculate_agriculture():
     print("corn_area ---->", corn_area)
@@ -262,6 +213,7 @@ def calculate_agriculture():
     return jsonify(result)
 
 
+# Water calculation route
 @app.route("/calculateIrrigation", methods=["GET", "POST"])
 def calculate_irrigation():
     print("aquifier_level ---->", aquifier_level)
@@ -281,6 +233,7 @@ def calculate_irrigation():
     return jsonify(result)
 
 
+# Energy calculation route
 @app.route("/calculateEnergy", methods=["GET", "POST"])
 def calculate_energy():
     print("energy_value ---->", energy_value)
@@ -316,6 +269,7 @@ def calculate_energy():
     return jsonify(result)
 
 
+# Climate calculation route
 @app.route("/calculateClimate", methods=["GET", "POST"])
 def calculate_climate():
     print("future_processes ---->", future_processes)
@@ -334,27 +288,27 @@ def calculate_climate():
 
     return jsonify(result)
 
-
+# Function to start Flask app
 def start_flaskapp():
-    # some_queue = queue
     app.run(host="0.0.0.0", port=5000)
 
-
+# Restart route
 @app.route("/restart", methods=["GET", "POST"])
 def restart():
     some_queue = queue.Queue()
     some_queue.put("something")
     print("Restarted successfully")
 
-
+# Download file route
 @app.route("/download")
 def download_file():
-    file_path = "/Users/pratiknikam/Documents/FEWCalc/workspace/FinalCode/NetLogo-main/NetLogo-main/1_Corn_inputs.csv"  # Specify the path to your file
-    # Use Flask's send_file function to send the file for download
+    file_path = "/Users/pratiknikam/Documents/FEWCalc/workspace/FinalCode/NetLogo-main/NetLogo-main/netlogo/1_Corn_inputs.csv"
     return send_file(file_path, as_attachment=True)
 
-
+# Initialize some_queue
 some_queue = None
+
+# Main block to start the Flask app
 if __name__ == "__main__":
     q = Queue()
     p = Process(target=start_flaskapp, args=(q,))

@@ -22,7 +22,11 @@
             ],
             "jinja": true,
             "justMyCode": true,
-            "python": "/Users/pratiknikam/Documents/FEWCalc/workspace/BackEnd/FEWCalc-master/venv/bin/python" 
+            "python": "/Users/pratiknikam/Documents/FEWCalc/workspace/BackEnd/FEWCalc-master/venv/bin/python" ,
+            "python": {
+                "editor.defaultFormatter": "ms-python.autopep8"
+            }
+            
         }
     ]
 }

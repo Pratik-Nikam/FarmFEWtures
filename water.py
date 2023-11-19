@@ -3,7 +3,7 @@ from netlogo_instance import get_netlogo_instance
 
 dirname = os.path.dirname(__file__)
 def crop_groundwater_irrigation():
-    crop_groundwater_irrigation_data = pd.read_csv(os.path.join(dirname, "crop-groundwater-irrigation.csv"), delimiter="\t", header=None)
+    crop_groundwater_irrigation_data = pd.read_csv(os.path.join(dirname, "netlogo/crop-groundwater-irrigation.csv"), delimiter="\t", header=None)
 
     df = pd.DataFrame(crop_groundwater_irrigation_data)
 
@@ -43,7 +43,7 @@ def crop_groundwater_irrigation():
 
 def groundwater_level():
     
-    groundwater_level_data = pd.read_csv(os.path.join(dirname, "groundwater-level.csv"), delimiter="\t", header=None)
+    groundwater_level_data = pd.read_csv(os.path.join(dirname, "netlogo/groundwater-level.csv"), delimiter="\t", header=None)
 
     df = groundwater_level_data
 

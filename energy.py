@@ -1,91 +1,142 @@
-from dependency import *
+import os
+import json
+import pandas as pd
+import seaborn as sns
 from netlogo_instance import get_netlogo_instance
 
 dirname = os.path.dirname(__file__)
+
+
 def farm_energy_production_calculation():
-    farm_energy_production_data = pd.read_csv(os.path.join(dirname, "farm-energy-production.csv"), delimiter="\t", header=None)
+    farm_energy_production_data = pd.read_csv(
+        os.path.join(dirname, "netlogo/farm-energy-production.csv"),
+        delimiter="\t",
+        header=None,
+    )
 
     # Preprocess the DataFrame
     df = pd.DataFrame(farm_energy_production_data)
 
-
     df = df.drop(df.index[0:14])
-    df = df[0].str.split(',', expand=True)
+    df = df[0].str.split(",", expand=True)
     df.columns = df.iloc[0]
     df = df.iloc[1:]
-    df.columns = ['year', "Wind", "color_0", "pen_down_0", 
-                "year_1","Solar", "color_1", "pen_down_1",
-                "year_2","0 MWh", "color_2", "pen_down_2"]
+    df.columns = [
+        "year",
+        "Wind",
+        "color_0",
+        "pen_down_0",
+        "year_1",
+        "Solar",
+        "color_1",
+        "pen_down_1",
+        "year_2",
+        "0 MWh",
+        "color_2",
+        "pen_down_2",
+    ]
 
     # Reset the index
     df.reset_index(drop=True, inplace=True)
 
     # Convert columns to integers
-    df['Wind'] = df['Wind'].str.replace('"', '').astype(float)
-    df['Solar'] = df['Solar'].str.replace('"', '').astype(float)
-    df['0 MWh'] = df['0 MWh'].str.replace('"', '').astype(float)
+    df["Wind"] = df["Wind"].str.replace('"', "").astype(float)
+    df["Solar"] = df["Solar"].str.replace('"', "").astype(float)
+    df["0 MWh"] = df["0 MWh"].str.replace('"', "").astype(float)
 
-    df=df[['year','Wind','Solar','0 MWh']]
+    df = df[["year", "Wind", "Solar", "0 MWh"]]
 
-    temp = {"energy": {
-        'Year': df['year'].values.tolist(),
-        'Wind': df['Wind'].values.tolist(),
-        'Solar': df['Solar'].values.tolist(),
-        'zeroMWh': df['0 MWh'].values.tolist()
-    }}
+    temp = {
+        "energy": {
+            "Year": df["year"].values.tolist(),
+            "Wind": df["Wind"].values.tolist(),
+            "Solar": df["Solar"].values.tolist(),
+            "zeroMWh": df["0 MWh"].values.tolist(),
+        }
+    }
 
-    
     print(temp)
 
     return json.dumps(temp)
 
 
 def energy_net_income_calculation():
-    
-    energy_net_income_data = pd.read_csv(os.path.join(dirname, "energy-net-income.csv"), delimiter="\t", header=None)
+    energy_net_income_data = pd.read_csv(
+        os.path.join(dirname, "netlogo/energy-net-income.csv"),
+        delimiter="\t",
+        header=None,
+    )
 
     df = energy_net_income_data
 
     df = df.drop(df.index[0:14])
 
-    df = df[0].str.split(',', expand=True)
+    df = df[0].str.split(",", expand=True)
 
     df.columns = df.iloc[0]
     df = df.iloc[1:]
 
-    df.columns = ['year', "Wind", "color_0", "pen_down_0", 
-                "year_1","Solar", "color_1", "pen_down_1",
-                "year_2","US$0", "color_2", "pen_down_2"]
+    df.columns = [
+        "year",
+        "Wind",
+        "color_0",
+        "pen_down_0",
+        "year_1",
+        "Solar",
+        "color_1",
+        "pen_down_1",
+        "year_2",
+        "US$0",
+        "color_2",
+        "pen_down_2",
+    ]
 
     # Reset the index
     df.reset_index(drop=True, inplace=True)
 
-    df['Wind'] = df['Wind'].str.replace('"', '')
+    df["Wind"] = df["Wind"].str.replace('"', "")
 
+    df["Wind"] = df["Wind"].str.replace('"', "").astype(float)
 
-    df['Wind'] = df['Wind'].str.replace('"', '').astype(float)
+    df["Solar"] = df["Solar"].str.replace('"', "").astype(float)
 
-    df['Solar'] = df['Solar'].str.replace('"', '').astype(float)
+    df["US$0"] = df["US$0"].str.replace('"', "").astype(float)
 
-    df['US$0'] = df['US$0'].str.replace('"', '').astype(float)
-
-    df=df[['year','Wind','Solar','US$0']]
-
+    df = df[["year", "Wind", "Solar", "US$0"]]
 
     temp = {
         "Income": {
-            'Year': df['year'].values.tolist(),
-            'Wind': df['Wind'].values.tolist(),
-            'US$0': df['US$0'].values.tolist(),
-            'Solar': df['Solar'].values.tolist()
+            "Year": df["year"].values.tolist(),
+            "Wind": df["Wind"].values.tolist(),
+            "US$0": df["US$0"].values.tolist(),
+            "Solar": df["Solar"].values.tolist(),
         }
     }
 
     return json.dumps(temp)
 
 
-
-def energy_calc(energy_value, loan_term, interest, nyear_w, num_wind_turbines, cost_w, capacity_w, degrade_w, wind_factor, num_panel_sets, nyear_s, cost_s, capacity_s, degrade_s, sun_hrs, ptc_w, itc_s, ptc_s,num_of_years):
+def energy_calc(
+    energy_value,
+    loan_term,
+    interest,
+    nyear_w,
+    num_wind_turbines,
+    cost_w,
+    capacity_w,
+    degrade_w,
+    wind_factor,
+    num_panel_sets,
+    nyear_s,
+    cost_s,
+    capacity_s,
+    degrade_s,
+    sun_hrs,
+    ptc_w,
+    itc_s,
+    ptc_s,
+    num_of_years,
+):
     # Set the style and context for the plots
     sns.set_style("white")
     sns.set_context("talk")
@@ -113,7 +164,7 @@ def energy_calc(energy_value, loan_term, interest, nyear_w, num_wind_turbines, c
 
     # Setup and run the NetLogo model
     netlogo.command("setup")
-    netlogo.command(f'repeat {num_of_years}  [go]')
+    netlogo.command(f"repeat {num_of_years}  [go]")
     netlogo.command("go")
 
     # Close the NetLogo workspace
@@ -122,13 +173,11 @@ def energy_calc(energy_value, loan_term, interest, nyear_w, num_wind_turbines, c
     # Open the CSV file and read the data into a Pandas DataFrame
     farm_energy_production_img_data = farm_energy_production_calculation()
 
-    energy_net_calc_img_data= energy_net_income_calculation()
+    energy_net_calc_img_data = energy_net_income_calculation()
 
     result = {
         "farm_energy_production_img_data": farm_energy_production_img_data,
-        "energy_net_calc_img_data": energy_net_calc_img_data
+        "energy_net_calc_img_data": energy_net_calc_img_data,
     }
 
     return result
-
-
