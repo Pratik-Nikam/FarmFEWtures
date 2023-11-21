@@ -4,7 +4,7 @@
 if command -v python3 &> /dev/null; then
     echo "Python found."
 else
-    echo "Python not found. Installing..."
+    echo "Python not found. Installing...."
     # Install Python (You may need to modify this based on your system package manager)
     sudo apt-get install python3
 fi
@@ -22,7 +22,7 @@ fi
 if [ -d "venv" ]; then
     echo "Virtual environment found."
 else
-    echo "Virtual environment not found. Creating..."
+    echo "Virtual environment not found. Creating...."
     python3 -m venv venv
 fi
 

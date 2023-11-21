@@ -1,4 +1,4 @@
-:: Task 0: Check if curl is installed, if not, install it
+:: Task 0: Check if curl is installed, if not, install it 
 where curl >nul 2>&1 || (
     echo Installing curl...
     curl -O https://curl.se/windows/dl-7.80.0/curl-7.80.0-win64-mingw.zip
