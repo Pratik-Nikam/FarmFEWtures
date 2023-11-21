@@ -8,9 +8,10 @@ netlogo = None
 def get_netlogo_instance():
     global netlogo
     if netlogo is None:
+        # jvm_path = "/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/MacOS/libjli.dylib"
         netlogo = pynetlogo.NetLogoLink(
             gui=False,
-            jvm_path="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/MacOS/libjli.dylib",
+            # jvm_path="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/MacOS/libjli.dylib",
         )
         print(dirname)
         print(
