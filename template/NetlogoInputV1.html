@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <title>Netlogo Simulation</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../template/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://demo.voidcoders.com/htmldemo/fitgear/main-files/assets/css/animate.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -25,6 +25,7 @@
       filter: blur(5px); /* Adjust the blur amount as needed */
       pointer-events: none;
     }
+
   </style>
 
 </head>
@@ -32,10 +33,11 @@
     <div id="loader" class="loader"></div>
 <section class="faq">
         <div class="container">
+            <a href="/" class="back-link homepage-link">Homepage</a>
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-8 text-center">
                     <div class="section-title">
-                        <h1>Welcome to the NetLogo Simulation &#128075;</h1>
+                        <h1>Farm FEWtures NetLogo Simulation</h1>
                     </div>
                 </div>
             </div>
@@ -50,7 +52,7 @@
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                Form related to Agriculture
+                                                Agriculture
                                             </button>
                                         </h5>
                                     </div>
@@ -86,7 +88,7 @@
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-												Form related to Energy
+												Energy
                                             </button>
                                         </h5>
                                     </div>
@@ -179,7 +181,7 @@
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Form related to Climate
+                                                Climate
                                             </button>
                                         </h5>
                                     </div>
@@ -189,10 +191,10 @@
                                                 <form action="/calculate" method="post" id="climateForm">
                                                     <label for="future_processes">Future Process:</label>
                                                     <select id="future_processes" name="future_processes">
-                                                        <option value="repeat_historical">Repeat Historical</option>
-                                                        <option value="wetter_future">Wetter Future</option>
-                                                        <option value="dryer_future">Dryer Future</option>
-                                                        <option value="gcm">GCM</option>
+                                                        <option value="Repeat Historical">Repeat Historical</option>
+                                                        <option value="Wetter Future">Wetter Future</option>
+                                                        <option value="Dryer Future">Dryer Future</option>
+                                                        <option value="GCM">GCM</option>
                                                     </select>
                                                     <br>
                                         
@@ -231,7 +233,7 @@
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapse5" aria-expanded="false" aria-controls="collapseOne">
-												Form related to Water
+												Water
                                             </button>
                                         </h5>
                                     </div>
@@ -254,13 +256,34 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                                data-target="#collapse6" aria-expanded="false" aria-controls="collapseTwo">
+                                                Ammonia (NH3)
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapse6" class="collapse" data-parent="#accordionExample">
+                                        <div class="card-body">
+											<div class="form-container">
+												<a href="/" class="back-link"></a>
+                                                <form action="/download-csv" method="GET" id="DownloadAmmoniaCSV">
+                                                    <input type="submit" value="Download CSV" id="download-button">
+                                                </form>
+											</div>
+                                        </div>
+                                    </div>
+                                </div>
     
                                 <div class="card">
                                     <div class="card-header">
                                         <h5 class="mb-0">
                                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapse6" aria-expanded="false" aria-controls="collapseTwo">
-                                                Choose the number of years and Run Similation.
+                                                Simulation Period
                                             </button>
                                         </h5>
                                     </div>
@@ -273,36 +296,16 @@
 													<input type="range" id="num_of_years" name="num_of_years" min="0" max="100" value="60">
 													<br>
 													<span id="slider-value">60</span>
+										
 													<br>
+										
 													<input type="submit" value="Calculate" id="calculate-button">
 												</form>
 											</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                data-target="#collapse6" aria-expanded="false" aria-controls="collapseTwo">
-                                                Download Data For Ammonia
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapse6" class="collapse" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="form-container">
-                                                <a href="/" class="back-link"></a>
-                                                <!-- Modify action to /download for the Download button -->
-                                                <form action="/download" method="GET" id="DownloadForm"></form>
-                                                <input type="submit" value="Download" id="download-button">
-                                                <!-- Add Download button -->
-                                            </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>    
+    
                                 <!-- <div class="card">
                                     <div class="card-header">
                                         <h5 class="mb-0">
