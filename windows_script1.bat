@@ -30,10 +30,13 @@ if %errorlevel% == 0 (
     @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 )
 
+if not exist C:\Python39 (
+    mkdir C:\Python39
 
-REM 2. Download and install Python using the official installer
-curl -o python-installer.exe https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe
-python-installer.exe /quiet TargetDir=C:\Python39
+    curl -o python-installer.exe https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe
+    python-installer.exe /quiet TargetDir=C:\Python39
+)
+
 
 REM 3. Add Python to the system PATH
 setx PATH "%PATH%;C:\Python39" /M
@@ -49,12 +52,12 @@ del python-installer.exe
 REM 5. Check Python version
 C:\Python39\python.exe --version
 
-REM 6. Install required Python modules
-C:\Python39\Scripts\pip.exe install -r requirements.txt || (
-    echo Error installing Python modules
-    pause
-    exit /b 1
-)
+::REM 6. Install required Python modules
+::C:\Python39\Scripts\pip.exe install -r requirements.txt || (
+::    echo Error installing Python modules
+::    pause
+::    exit /b 1
+::)
 
 
 REM Check if Java is now in the system PATH
