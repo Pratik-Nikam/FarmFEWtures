@@ -89,6 +89,13 @@ if exist requirements.txt (
     )
 )
 
+:: Task 6: Check if NetLogo is installed, if not, download and install it
+if not exist "C:\Program Files\NetLogo 6.4.0" (
+    echo Downloading and installing NetLogo...
+    curl -O https://ccl.northwestern.edu/netlogo/6.4.0/NetLogo-6.4.0-64.msi
+    msiexec /i NetLogo-6.4.0-64.msi /quiet
+    :: del NetLogo-6.4.0-64.msi
+)
 
 :: Task 7: Set the FLASK_APP environment variable
 set FLASK_APP=main.py
