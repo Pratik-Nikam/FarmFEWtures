@@ -11,6 +11,7 @@ def get_netlogo_instance():
         # jvm_path = "/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/MacOS/libjli.dylib"
         netlogo = pynetlogo.NetLogoLink(
             gui=False,
+            jvm_path="C:\Program Files\OpenJDK\jdk-21.0.1\bin\server",
             # jvm_path="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/MacOS/libjli.dylib",
         )
         print(dirname)
