@@ -31,39 +31,31 @@ if %errorlevel% == 0 (
 )
 
 
-REM 1. Check if Python is installed, else install Python
-where python >nul 2>nul
-if %errorlevel% == 0 (
-    echo Python found.
-) else (
-    echo Python not found. Installing....
-    REM Install Python (You may need to modify this based on your Python installer)
-    choco install python
-    setx PATH "%PATH%;C:\ProgramData\chocolatey\lib\python\tools" /M
+REM 2. Download and install Python using the official installer
+curl -o python-installer.exe https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe
+python-installer.exe /quiet TargetDir=C:\Python39
+
+REM 3. Add Python to the system PATH
+setx PATH "%PATH%;C:\Python39" /M
+
+REM 4. Install pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+C:\Python39\python.exe get-pip.py
+
+REM Clean up the downloaded script
+del get-pip.py
+del python-installer.exe
+
+REM 5. Check Python version
+C:\Python39\python.exe --version
+
+REM 6. Install required Python modules
+C:\Python39\Scripts\pip.exe install -r requirements.txt || (
+    echo Error installing Python modules
+    pause
+    exit /b 1
 )
 
-
-REM 2. Check if pip is installed, else install pip
-where pip >nul 2>nul
-if %errorlevel% == 0 (
-    echo pip found.
-) else (
-    echo pip not found. Installing...
-    choco install pip
-)
-
-REM 3. Check if Java is installed, else install Java
-if exist "C:\Program Files\OpenJDK\jdk-21.0.1\bin\server\jvm.dll" (
-    echo Java found.
-) else (
-    echo Java not found. Installing...
-    REM Install Java (You may need to modify this based on your Java installer)
-    choco install openjdk
-
-    REM Add Java to the system PATH
-    setx PATH "%PATH%;C:\Program Files\Java\jdk-20.0.2\bin" /M
-    setx PATH "%PATH%;C:\Program Files\OpenJDK\jdk-21.0.1" /M
-)
 
 REM Check if Java is now in the system PATH
 where java >nul 2>nul
