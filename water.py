@@ -45,7 +45,7 @@ def crop_groundwater_irrigation():
 
 def groundwater_level():
     
-    groundwater_level_data = pd.read_csv(os.path.join(dirname, "groundwater-level.csv"), delimiter="\t", header=None)
+    groundwater_level_data = pd.read_csv(os.path.join(dirname, "netlogo/groundwater-level.csv"), delimiter="\t", header=None)
 
     df = groundwater_level_data
 

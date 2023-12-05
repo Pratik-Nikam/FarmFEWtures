@@ -8,9 +8,6 @@
     <div class="chart-container">
         <a href="http://127.0.0.1:5000/ChartWindow" class="back-link"></a>
         <div class="chart" id="chart1">
-            <div class="chart-title-box">
-                <h1 class="chart-title">Total Farm Income Chart</h1>
-            </div>
             <canvas id="totalFarmEnergyIncomeChart"></canvas>
         </div>
     </div>
@@ -18,17 +15,16 @@
     <div class="chart-container1">
         <a href="http://127.0.0.1:5000/ChartWindow" class="back-link"></a>
         <div class="chart" id="chart2">
-            <div class="chart-title-box">
-                <h1 class="chart-title">Income from Crop Insurance Chart</h1>
-            </div>
             <canvas id="incomeFromCropInsuranceChart"></canvas>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.2.2/html2canvas.min.js"></script>
-    <script src="{{ url_for('static', filename='climate.js') }}"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.2.2/html2canvas.min.js"></script>
+    <script src="{{ url_for('static', filename='climate.js') }}"></script>
+ 
 </body>
 </html>
 
