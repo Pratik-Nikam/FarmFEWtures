@@ -12,3 +12,4 @@ seaborn===0.13.0
 tzdata==2023.3
 pillow==10.1.0
 werkzeug==2.2.2
+gunicorn==21.2.0
